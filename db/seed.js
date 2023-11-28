@@ -10,18 +10,28 @@ const createTables = async() => {
                 state CHAR(2),
                 zip_code CHAR(5),
                 is_accredited BOOLEAN
-            );
-        `)
+                );
+            CREATE TABLE students(
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                grade_level INTEGER,
+                start_date DATE,
+                graduation_date DATE,
+                school_id INTEGER REFERENCES schools(id)
+                );
+        
+        `);
 
 
     } catch (error) {
-        
+       console.log(error); 
     }
 }
 
 const dropTables = async() => {
     try {
-        await client.query(`DROP TABLE IF EXISTS schools;`);
+        await client.query(`DROP TABLE IF EXISTS schools; 
+                            DROP TABLE IF EXISTS students;`);
     } catch (error) {
         console.log(error);
     }
