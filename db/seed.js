@@ -1,6 +1,7 @@
 const client = require('./client.js');
 const {createSchool} = require('./schools.js');
 const { createStudent } = require('./students.js');
+const {createTeacher} = require('./teachers.js');
 
 const createTables = async() => {
     try {
@@ -13,6 +14,14 @@ const createTables = async() => {
                 zip_code CHAR(5),
                 is_accredited BOOLEAN
                 );
+
+            CREATE TABLE teachers(
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                subject VARCHAR(30),
+                school_id INTEGER REFERENCES schools(id)
+                );
+    
             CREATE TABLE students(
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(50) NOT NULL,
@@ -20,8 +29,10 @@ const createTables = async() => {
                 gpa FLOAT(2),
                 start_date DATE,
                 graduation_date DATE,
-                school_id INTEGER REFERENCES schools(id)
+                school_id INTEGER REFERENCES schools(id),
+                teacher_id INTEGER REFERENCES teachers(id)
                 );
+
         
         `);
 
@@ -33,7 +44,9 @@ const createTables = async() => {
 
 const dropTables = async() => {
     try {
-        await client.query(`DROP TABLE IF EXISTS students, schools;
+        await client.query(`DROP TABLE IF EXISTS students;
+                            DROP TABLE IF EXISTS teachers;
+                            DROP TABLE IF EXISTS schools;
                             `);
     } catch (error) {
         console.log(error);
@@ -58,6 +71,11 @@ const syncAndSeed = async () =>{
         await createStudent('Tom', 1, 4.0);
         await createStudent('Jerry', 3, 3.3);
         console.log('ADD STUDENTs');
+        await createTeacher('Magoo', 'Math', 1);
+        await createTeacher('Jane', 'Science', 1);
+        await createTeacher('Polly', 'English', 2);
+        await createTeacher('George', 'Art', 3);
+        console.log('ADD TEACHERS');
         client.end();
     }catch(err){console.log(err)};
 
