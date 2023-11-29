@@ -48,9 +48,15 @@ const syncAndSeed = async () =>{
         console.log('DROP TABLES');
         await createTables();
         console.log('CREATE TABLES');
-        await createSchool('Rutgers');
+        await createSchool('Rutgers', 'Mobile', 'AL');
+        await createSchool('Yale', 'Allentown', 'NJ');
+        await createSchool('Harvard', 'Frankstone', 'CN');
+        await createSchool('George', 'Georgeville', 'YI');
         console.log('ADD SCHOOLS');
-        await createStudent('Jeff');
+        await createStudent('Jeff', 3, 3.5);
+        await createStudent('Bill', 4, 2.8);
+        await createStudent('Tom', 1, 4.0);
+        await createStudent('Jerry', 3, 3.3);
         console.log('ADD STUDENTs');
         client.end();
     }catch(err){console.log(err)};

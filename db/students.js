@@ -1,10 +1,10 @@
 const client = require('./client');
 
-const createStudent = async( name ) => {
+const createStudent = async( name, grade_level, gpa ) => {
     try {
         await client.query(`
-        INSERT  INTO students (name)
-        VALUES ('${name}');
+        INSERT  INTO students (name, grade_level, gpa)
+        VALUES ('${name}', ${grade_level}, ${gpa});
     `);
 
     } catch (error) {
