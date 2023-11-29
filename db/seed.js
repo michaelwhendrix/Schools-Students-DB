@@ -1,4 +1,6 @@
 const client = require('./client.js');
+const {createSchool} = require('./schools.js');
+const { createStudent } = require('./students.js');
 
 const createTables = async() => {
     try {
@@ -15,6 +17,7 @@ const createTables = async() => {
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(50) NOT NULL,
                 grade_level INTEGER,
+                gpa FLOAT(2),
                 start_date DATE,
                 graduation_date DATE,
                 school_id INTEGER REFERENCES schools(id)
@@ -30,8 +33,8 @@ const createTables = async() => {
 
 const dropTables = async() => {
     try {
-        await client.query(`DROP TABLE IF EXISTS schools; 
-                            DROP TABLE IF EXISTS students;`);
+        await client.query(`DROP TABLE IF EXISTS students, schools;
+                            `);
     } catch (error) {
         console.log(error);
     }
@@ -44,8 +47,11 @@ const syncAndSeed = async () =>{
         await dropTables();
         console.log('DROP TABLES');
         await createTables();
-        console.log('CREATE TABLES')
-
+        console.log('CREATE TABLES');
+        await createSchool('Rutgers');
+        console.log('ADD SCHOOLS');
+        await createStudent('Jeff');
+        console.log('ADD STUDENTs');
         client.end();
     }catch(err){console.log(err)};
 
