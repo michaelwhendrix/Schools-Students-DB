@@ -4,12 +4,14 @@
   "description": "practice of seeding a db",
   "main": "index.js",
   "scripts": {
-    "seed:dev": "nodemon db/seed.js",
+    "start:dev": "nodemon server.js",
+    "seed:dev": "node db/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "hendrix",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3"
   }
